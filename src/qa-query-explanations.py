@@ -17,7 +17,7 @@ ES_PORT = 9200
 ES_INDEXNAME = "expl-idx"
 ES_DOCTYPE = "explanations"
 
-OUTPUT = "qa-es-explanations-5.txt"
+OUTPUT = "qa-es-explanations-1000.txt"
 
 class StoryFinder(object):
     
@@ -30,7 +30,7 @@ class StoryFinder(object):
         self.index = index
         self.doc_type = doc_type
 
-    def find_stories_for_question(self, question, num_stories=5):
+    def find_stories_for_question(self, question, num_stories=1000):
         # extract tokens from question to search with (NOUN, VERB, PROPN)
         question = re.sub(r"[^A-Za-z0-9 ]", "", question)
         tokens = self.nlp(question)
@@ -86,6 +86,26 @@ with open(os.path.join(DATA_DIR, EXPL_INPUT), "r", encoding="utf8") as f:
         val = val.replace(" ", "").strip()
         if "SÃ£oTomÃ©andPrÃ­ncipe" in val:
             val = "SoTomandPrncipeislocatedintheequatorialregion"
+        if "thesurfaceofthesunisextremelyhotintemperature" in val:
+            val = "thesurfaceofthesunisextremelyhotintemperaturewithvaluesashighas20000000C"
+        if "YucatÃ¡nisastate" in val:			
+            val = "YucatnisastatelocatedinMexico"	
+        if "MichoacÃ¡nisastate" in val:
+            val = "MichoacnisastatelocatedinMexico"	
+        if "NuevoLeÃ³nisastate" in val:			
+            val = "NuevoLenisastatelocatedinMexico"
+        if "MÃ©xicoisastate" in val:			
+            val = "MxicoisastatelocatedinMexico"
+        if "QuerÃ©taroisastate" in val:
+            val = "QuertaroisastatelocatedinMexico"
+        if "SanLuisPotosÃ­isastate" in val:
+            val = "SanLuisPotosisastatelocatedinMexico"		
+        if "CuraÃ§aoislocatedin" in val:
+            val = "Curaaoislocatedinthenorthernhemisphere"
+        if "SaintBarthÃ©lemy(France)islocated" in val:
+            val = "SaintBarthlemy(France)islocatedinthenorthernhemisphere"
+        if "RÃ©union(France)islocatedin" in val:
+            val = "Runion(France)islocatedinthesouthernhemisphere"
         explanations_d[val] = key
 
 fqa = open(os.path.join(DATA_DIR, QA_QUERY_INPUT), "r", encoding="utf8")
